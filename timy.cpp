@@ -7,8 +7,16 @@
 
 #include "timy.h"
 
-TIMY::TIMY(const char* ns) {
-  ntp_server = ns;
+TIMY::TIMY(const char* ip) {
+  ntp_server = ip;
+}
+
+TIMY::TIMY() {
+  ntp_server = "192.168.1.1";
+}
+
+void TIMY::set_ntp(const char* ip) {
+  ntp_server = ip;
 }
 
 /*
