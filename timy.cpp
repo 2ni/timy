@@ -19,6 +19,10 @@ void TIMY::set_ntp(const char* ip) {
   ntp_server = ip;
 }
 
+byte TIMY::is_leap_year(unsigned long year) {
+  return ((1970+year)>0) && !((1970+year)%4) && ( ((1970+year)%100) || !((1970+year)%400) );
+}
+
 /*
  * timestamp to datetime
  * based on https://github.com/PaulStoffregen/Time/blob/master/Time.cpp
@@ -41,12 +45,12 @@ TIMY::Datetime TIMY::ts2dt(unsigned long timestamp) {
 
     year=0;
     days=0;
-    while((unsigned)(days += (LEAP_YEAR(year) ? 366 : 365)) <= timestamp) {
+    while((unsigned)(days += (is_leap_year(year) ? 366 : 365)) <= timestamp) {
       year++;
     }
     dt.Year = (1970+year); // year is offset from 1970
 
-    days -= LEAP_YEAR(year) ? 366:365;
+    days -= is_leap_year(year) ? 366:365;
     timestamp -= days;
 
     days=0;
@@ -54,7 +58,7 @@ TIMY::Datetime TIMY::ts2dt(unsigned long timestamp) {
     monthLength=0;
     for (month=0; month<12; month++) {
       if (month==1) { // february
-        if (LEAP_YEAR(year)) {
+        if (is_leap_year(year)) {
           monthLength=29;
         } else {
           monthLength=28;

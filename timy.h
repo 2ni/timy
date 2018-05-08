@@ -12,14 +12,12 @@
 #define EarthMeanRadius 6371.01      // In km
 #define AstronomicalUnit 149597890      // In km
 
-#define LEAP_YEAR(Y) ( ((1970+Y)>0) && !((1970+Y)%4) && ( ((1970+Y)%100) || !((1970+Y)%400) ) )
-
-
 class TIMY {
 
 private:
   const char* ntp_server;
   unsigned long get_timestamp_from_ntp();
+  byte is_leap_year(unsigned long year);
 
 
 public:
