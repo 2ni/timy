@@ -39,7 +39,7 @@ public:
   TIMY(const char* ntp_server);
   TIMY();
   void set_ntp(const char* ip);
-  Sunpos calc_sunpos(Datetime dt, float lat, float lon);
+  Sunpos calc_sunpos(Datetime dt, float lat, float lon, int degree=1);
   unsigned long get_timestamp();
   unsigned long get_local_timestamp();
   unsigned long ts2local(unsigned long timestamp);

@@ -212,7 +212,7 @@ unsigned long TIMY::get_timestamp_from_ntp() {
  *  270 -> west
  *
  */
-TIMY::Sunpos TIMY::calc_sunpos(Datetime dt, float lat, float lon) {
+TIMY::Sunpos TIMY::calc_sunpos(Datetime dt, float lat, float lon, int degree) {
   float Azimuth;
   float Elevation;
 
@@ -289,13 +289,19 @@ TIMY::Sunpos TIMY::calc_sunpos(Datetime dt, float lat, float lon) {
   dY = -sin( HourAngle );
   dX = tan( Declination )*Cos_Latitude - Sin_Latitude*Cos_HourAngle;
   Azimuth = atan2( dY, dX );
-  if ( Azimuth < 0.0 ) Azimuth = Azimuth + twopi;
-  Azimuth = Azimuth/rad;
+  if (Azimuth < 0.0) Azimuth = Azimuth + twopi;
+  if (degree) Azimuth = Azimuth/rad;
 
   // Parallax Correction
   Parallax=(EarthMeanRadius/AstronomicalUnit) *sin(ZenithAngle);
+  /*
   ZenithAngle=(ZenithAngle + Parallax)/rad; //Zenith angle is from the top of the visible sky (thanks breaksbassbleeps)
   Elevation = (90-ZenithAngle); //Retrieve useful elevation angle from Zenith angle
+  */
+
+  ZenithAngle = (ZenithAngle + Parallax); //Zenith angle is from the top of the visible sky (thanks breaksbassbleeps)
+  Elevation = (pi/2 - ZenithAngle); //Retrieve useful elevation angle from Zenith angle
+  if (degree) Elevation = Elevation/rad;
 
   // Elevation, Azimuth are now set
   Sunpos res = { Azimuth, Elevation };
