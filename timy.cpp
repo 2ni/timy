@@ -84,10 +84,10 @@ TIMY::Datetime TIMY::ts2dt(unsigned long timestamp) {
  */
 void TIMY::ts2human(unsigned long timestamp, char *msg) {
   if (timestamp == 0) {
-    sprintf(msg, "");
+    msg[0] = 0;
   } else {
     Datetime dt = ts2dt(timestamp);
-    sprintf(msg, "%02d-%02d %02d:%02d:%02d", dt.Month, dt.Day, dt.Hour, dt.Minute, dt.Second);
+    sprintf(msg, "%04d-%02d-%02d %02d:%02d:%02d", dt.Year, dt.Month, dt.Day, dt.Hour, dt.Minute, dt.Second);
   }
 }
 
@@ -119,6 +119,8 @@ unsigned long TIMY::get_timestamp() {
     delay(2000);
     timestamp = get_timestamp_from_ntp();
   }
+
+  return timestamp;
 }
 
 unsigned long TIMY::get_timestamp_from_ntp() {
