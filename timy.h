@@ -1,9 +1,20 @@
 #include <math.h>
 #include <stdint.h>
 
-#include <ESP8266WiFi.h>
-#include <WiFiUDP.h>
+#ifdef ESP8266
+  #include <ESP8266WiFi.h>
+  #include <WiFiUDP.h>
+#endif
 
+#ifdef ESP32
+  #include <WiFi.h>
+  #include <WiFiUdp.h>
+#endif
+
+// depends on https://github.com/JChristensen/Timezone
+// pio lib install Timezone_ID76
+// and https://github.com/PaulStoffregen/Time
+// pio lib install Time_ID44
 #include <Timezone.h>
 
 #define pi 3.14159265358979323846
