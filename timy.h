@@ -1,3 +1,6 @@
+#ifndef timy_h
+#define timy_h
+
 #include <math.h>
 #include <stdint.h>
 
@@ -57,4 +60,4 @@ public:
   void ts2human(unsigned long timestamp, char *msg);
   Datetime ts2dt(unsigned long timestamp);
 };
-
+#endif
